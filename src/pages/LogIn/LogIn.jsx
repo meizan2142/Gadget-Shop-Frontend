@@ -1,41 +1,63 @@
 import { NavLink } from 'react-router-dom';
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { useForm } from 'react-hook-form';
 const LogIn = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm()
+    const onSubmit = (data) => {
+        const email = data.email;
+        const password = data.password;
+        const select = data.select;
+        const userInfo = { email, password, select }
+        console.log(userInfo);
+        // axios.post('http://localhost:4000/users', {userInfo})
+        // .then(res => {
+        //     console.log(res);
+        // })
+        // .catch(error => {
+        //     console.log(error);
+        // })
+    }
     return (
         <div className="mx-auto w-full max-w-md space-y-4 rounded-lg border bg-white p-10 my-36">
             <div className='text-3xl'>
-            <NavLink to='/'><FaArrowAltCircleLeft /></NavLink>
+                <NavLink to='/'><FaArrowAltCircleLeft /></NavLink>
             </div>
             <h1 className="text-3xl font-semibold">Sign In</h1>
-            <form action="#" className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-                    <label htmlFor="username_2" className="block font-medium">
-                        Username
+                    <label htmlFor="Email" className="block font-medium">
+                        Email
                     </label>
                     <input
-                        className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:ring-1 focus-visible:outline-none dark:border-zinc-700"
-                        id="username_2"
-                        placeholder="Enter username"
-                        name="username"
+                        className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:ring-1 text-black focus-visible:outline-none dark:border-zinc-700"
+                        id="Email"
+                        placeholder="Enter email"
+                        {...register('email', { 'required': true })}
                         type="text"
                     />
+                    {errors.email?.type === 'required' && (
+                        <p className='text-red-400'>Name is required</p>
+                    )}
                 </div>
                 <div className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-                    <label htmlFor="password_2" className="block font-medium">
+                    <label htmlFor="password" className="block font-medium">
                         Password
                     </label>
                     <input
-                        className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:ring-1 focus-visible:outline-none dark:border-zinc-700"
-                        id="password_2"
+                        className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:ring-1 text-black focus-visible:outline-none dark:border-zinc-700"
                         placeholder="Enter Password"
-                        name="password"
+                        {...register('password', { required: true, minLength: 6 })}
                         type="password"
                     />
-                    <div className="flex justify-end text-xs">
-                        <a href="#" className="text-zinc-700 hover:underline dark:text-zinc-300">
-                            Forgot Password?
-                        </a>
-                    </div>
+                    {
+                        errors.password?.type === 'minLength' && (
+                            <p className='text-red-400'>Password length must have at least 6 characters</p>
+                        )
+                    }
                 </div>
                 <button className="w-1/2  rounded-md bg-cyan-500 mx-[90px] px-4 py-2 text-white transition-colors ">Submit</button>
             </form>
