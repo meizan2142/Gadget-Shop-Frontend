@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form"
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 // import axios from 'axios';
 const Register = () => {
+    
+    
     const {
         register,
         handleSubmit,

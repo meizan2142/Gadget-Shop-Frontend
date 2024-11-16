@@ -37,7 +37,7 @@ export const AuthProvider = ({children}) => {
     setLoading(true)
     return updateUserProfile(auth.currentUser, {
       displayName: name,
-      photoURL: photo
+      photoURL: photo,
     })
   }
 
@@ -67,6 +67,8 @@ export const AuthProvider = ({children}) => {
     signIn,
     updateUserProfile
   }
+  
+  
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

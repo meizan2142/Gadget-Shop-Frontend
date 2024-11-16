@@ -10,8 +10,7 @@ const LogIn = () => {
     const onSubmit = (data) => {
         const email = data.email;
         const password = data.password;
-        const select = data.select;
-        const userInfo = { email, password, select }
+        const userInfo = { email, password }
         console.log(userInfo);
         // axios.post('http://localhost:4000/users', {userInfo})
         // .then(res => {
