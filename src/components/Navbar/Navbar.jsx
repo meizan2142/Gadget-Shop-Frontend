@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { UserDropDown } from '../UserDropDown';
 const Navbar = () => {
     const [dropDownState, setDropDownState] = useState(false);
     const dropDownMenuRef = useRef();
-
+    const { user } = useAuth()
     useEffect(() => {
         const closeDropDown = (e) => {
             if (!dropDownMenuRef?.current?.contains(e?.target)) {
@@ -32,12 +34,21 @@ const Navbar = () => {
         <li>
             <NavLink className={({ isActive }) => isActive ? 'group flex  cursor-pointer flex-col text-red-500 font-bold' : "group flex  cursor-pointer flex-col"} to='/contact'>Contact Us<span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-red-500 transition-all duration-300 group-hover:w-full"></span></NavLink>
         </li>
-        <li>
-            <NavLink to='/login'><button className='bg-cyan-300 p-2 rounded-lg text-black font-bold'>SignIn</button></NavLink>
-        </li>
-        <li>
-            <NavLink to='/signup'><button className='bg-cyan-300 p-2 rounded-lg text-black font-bold'>Register</button></NavLink>
-        </li>
+        {
+            user?
+                <>
+                    <UserDropDown/>
+                </>
+                :
+                <>
+                    <li>
+                        <NavLink to='/login'><button className='bg-cyan-300 p-2 rounded-lg text-black font-bold'>SignIn</button></NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/signup'><button className='bg-cyan-300 p-2 rounded-lg text-black font-bold'>Register</button></NavLink>
+                    </li>
+                </>
+        }
     </>
     return (
         <nav className="flex fixed w-full z-[10] items-center justify-between bg-[#393E46] px-4 py-2 text-white ">

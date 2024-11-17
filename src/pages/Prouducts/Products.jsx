@@ -1,8 +1,7 @@
 const Products = () => {
     return (
-        <div>
+        <div className="pt-16 container mx-auto">
             Products
-            
         </div>
     );
 };
